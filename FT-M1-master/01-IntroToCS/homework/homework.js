@@ -1,12 +1,12 @@
 'use strict';
 
 function BinarioADecimal(num) {
-   var sum = 0;
-   for (var i=0; i<num.length; i++){
+   let sum = 0;
+   for (let i=0; i<num.length; i++){
       sum+=num[i]*2**(num.length-1-i);
    }
    return  sum;
-  
+  // return parseInt(num,2);
  
 }
 
@@ -20,7 +20,7 @@ function DecimalABinario(num) {
         num = Math.floor(num/2);
         almacenador.push(residuo);}
 
-        var numeroreversa = almacenador.reverse().join('')
+        let numeroreversa = almacenador.reverse().join('')
         return numeroreversa
 
 }
