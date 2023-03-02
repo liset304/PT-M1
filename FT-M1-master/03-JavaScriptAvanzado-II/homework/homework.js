@@ -15,17 +15,17 @@ otroContador()      // 1
 otroContador()      // 2 */
 function counter() {
 
-  for ( var i=1; i < 3; i++){
-     return (function(j){
-        return function() {console.log(j);}
-      }(i))
-      
+  for ( var i=1; i > 0; i++){
+    let counter = i
+     return function(){
+        return counter ++}
+      }
+      const nuevoContador=counter()
+      nuevoContador()
+      nuevoContador()
+      nuevoContador()  
 }
-const nuevoContador=counter()
-nuevoContador()
-nuevoContador()
-nuevoContador()
-}
+
 
 
 /* Ejercicio 2
@@ -46,9 +46,22 @@ otra vez cálculos que ya se hicieron anteriormente.
   squareCache(5)    // invocará a square(5), almacenará el resultado y lo retornará
   squareCache(5)    // no volverá a invocar a square, simplemente buscará en la caché cuál es el resultado de square(5) y lo retornará (tip: si usaste un objeto, podés usar hasOwnProperty) */
 
-function cacheFunction(cb) {}
+function cacheFunction(cb) {
+  const cache = {};
+  return function (arg){
+    if (cache.hasOwnProperty(arg)){
+      return cache[arg];
+    }
+    else{
+      const resultado =cb(arg);
+      cache[arg] = resultado;
+      return resultado;
+    }
+  }
+}
 
 //----------------------------------------
+
 
 // Bind
 
