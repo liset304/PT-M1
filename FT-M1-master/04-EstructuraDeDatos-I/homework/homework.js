@@ -14,12 +14,23 @@ Secuencia:  0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...
 Como ejercicio adicional y completamente opcional, al terminar de resolver este problema pueden intentar definir funciones que logren los mismos resultados pero de manera iterativa.
 */
 
-function nFactorial(n) {}
+function nFactorial(n) {
+  if(n===0 || n===1)return 1;
+  if(n<0) return "los numeros factoriales no pueden ser negativos"
+  return n*nFactorial(n-1)
+  
+}
 
-function nFibonacci(n) {}
+function nFibonacci(n) {
+  if(n===0) return 0
+  if(n===1) return 1
+  if(n<0) return "No existe el fibonacci"
+  return nFibonacci(n-2) + nFibonacci(n-1)
+}
 
 /*
-Implementar la clase Queue, sabiendo que es una estructura de tipo FIFO, donde el primer elemento que ingresa es el primero que se quita. Definir los siguientes métodos:
+Implementar la clase Queue, sabiendo que es una estructura de tipo FIFO, donde el primer elemento 
+que ingresa es el primero que se quita. Definir los siguientes métodos:
   - enqueue: agrega un valor respetando el orden.
   - dequeue: remueve un valor respetando el orden. Retorna undefined cuando la queue está vacía.
   - size: retorna el tamaño (cantidad de elementos) de la queue.
@@ -27,7 +38,48 @@ Implementar la clase Queue, sabiendo que es una estructura de tipo FIFO, donde e
 Pueden utilizar class o función constructora.
 */
 
-function Queue() {}
+function Queue() {
+   this.queue = []
+   this._tail = 0;
+
+
+  Queue.prototype.enqueue = function(val) {
+    this.queue.push(val)
+    this._tail += 1;
+    this.size(); 
+    return this.queue.push(val);
+    
+    }
+
+    Queue.prototype.dequeue = function() {
+      this.queue.shift()
+      this._tail -= 1;
+      this.size();
+      return this.queue.shift()
+    }
+
+    Queue.prototype.size = function() {
+      if (this._tail < 0) return 0
+        return this._tail;
+    }
+};
+ /*  class queue {
+    constructor(){
+      this.queue = []
+    }
+    enqueue(valor){
+      this.queue.push(valor)
+    }
+    dequeue(){
+      this.queue.shift()
+    }
+    size(){
+      return console.log(queue.length)
+    }
+  } */
+  
+
+
 
 /*⚠️ No modificar nada debajo de esta línea ⚠️*/
 module.exports = {
