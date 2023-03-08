@@ -10,9 +10,67 @@ Implementar la clase LinkedList, definiendo los siguientes métodos:
   search(isEven), donde isEven es una función que retorna true cuando recibe por parámetro un número par, busca un nodo cuyo valor sea un número par.
   En caso de que la búsqueda no arroje resultados, search debe retornar null.
 */
-function LinkedList() {}
+function LinkedList() {
+    this.head    = null;
+    this._length = 0;
+  
+  this.add = function(value){
+    let node = new Node (value)
+    let current =this.head;
+    if(!current){
+      this.head=node;
+      this._length++;
+      return node;
+    }
+    while (current.next){
+      current=current.next;
+    }
+    current.next=node;
+    this._length++;
+    return node;
+  }
 
-function Node(value) {}
+  this.remove =function(){
+    if (this.head == null) {
+      return null;
+    }
+    let current = this.head;
+    if(current.next === null){ // Si queda un elemento
+      this.head = null;
+      return current.value;
+    } 
+    
+    while (current.next.next != null) {
+      current= current.next;
+    }
+    
+    
+    let last = current.next;
+    current.next = null;
+    return last.value;
+    
+  }
+
+  
+
+  this.search = function(value){
+    var current = this.head;
+      while (current != null)
+      {
+          if (current.value === value)
+              return current.value;
+              current = current.next;
+          }
+          return null;
+          
+  }
+}
+function Node(value) {
+  this.value=value;
+  this.next=null;
+}
+
+
 
 /* EJERCICIO 2
 Implementar la clase HashTable.
@@ -27,7 +85,65 @@ La clase debe tener los siguientes métodos:
 
 Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero puedo chequear, con hasKey, si ya hay algo en la tabla con el nombre 'instructora'; luego, invocando set('instructora', 'Ani'), se almacenará el par clave-valor en un bucket específico (determinado al hashear la clave)
 */
-function HashTable() {}
+function HashTable() {
+  this.tabla = new Array(35);
+  this.tamano = 0;
+  this.numBuckets = 35;
+  this.hash= function(llave) {
+    let hash = 0;
+    for (let i = 0; i < llave.length; i++) {
+       hash += llave.charCodeAt(i);
+      
+    }
+    return hash % this.numBuckets;
+  }
+  
+ this.set = function (llave, valor) {
+    const indice = this.hash(llave);
+    if (this.tabla[indice]) {
+      for (let i = 0; i < this.tabla[indice].length; i++) {
+        // Encuentra llave-valor en el arreglo
+        if (this.tabla[indice][i][0] === llave) {
+          this.table[indice][i][1] = valor;
+          return this.tabla[indice].indexOf(valor);
+        }
+      }
+      // No encontrado, añade un nuevo llave valor
+      this.tabla[indice].push([llave, valor]);
+    } else {
+      this.tabla[indice] = [];
+      this.tabla[indice].push([llave, valor]);
+    }
+    this.tamano++;
+  }
+
+  this.get = function(llave) {
+    const objetivo = this.hash(llave);
+    if (this.tabla[llave]) {
+      for (let i = 0; i < this.tabla.length; i++) {
+        if (this.tabla[objetivo][i][0] === llave) {
+          return this.tabla[objetivo][i][1];
+        }
+      }
+    }
+    return undefined;
+  }
+
+  this.hasKey = function(llave) {
+    const indice = this.hash(llave);
+    if(this.tabla[indice].indexOf(llave))
+      {
+        return true}
+     return false;
+
+  }
+ 
+}
+// let hashTable = new HashTable();
+// hashTable.set('foobar', 'fluf cats');
+// hashTable.set('key2', 'val2');
+// console.log(hashTable.hasKey('foobar'))
+// console.log(hashTable.hasKey('raboof'))
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
