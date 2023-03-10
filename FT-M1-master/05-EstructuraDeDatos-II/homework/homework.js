@@ -12,9 +12,13 @@ Implementar la clase LinkedList, definiendo los siguientes métodos:
 */
 function LinkedList() {
     this.head    = null;
-    this._length = 0;
-  
-  this.add = function(value){
+} 
+
+function Node(value) {
+  this.value=value;
+  this.next=null;
+}
+LinkedList.prototype.add = function(value){
     let node = new Node (value)
     let current =this.head;
     if(!current){
@@ -30,7 +34,7 @@ function LinkedList() {
     return node;
   }
 
-  this.remove =function(){
+LinkedList.prototype.remove =function(){
     if (this.head == null) {
       return null;
     }
@@ -43,32 +47,28 @@ function LinkedList() {
     while (current.next.next != null) {
       current= current.next;
     }
-    
-    
-    let last = current.next;
+    let last = current.next.value;
     current.next = null;
-    return last.value;
+    return last;
     
   }
 
-  
-
-  this.search = function(value){
-    var current = this.head;
-      while (current != null)
+  LinkedList.prototype.search = function(value){
+    let current = this.head;
+    if(!current) return null;
+      while (current)
       {
-          if (current.value === value)
-              return current.value;
-              current = current.next;
+          if(typeof value === 'function'){
+            if(value(current.value)) return current.value
           }
-          return null;
+          if (current.next.value === value){return current.value}
+                  
+        }
+    return null
           
   }
-}
-function Node(value) {
-  this.value=value;
-  this.next=null;
-}
+
+
 
 
 
@@ -86,58 +86,39 @@ La clase debe tener los siguientes métodos:
 Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero puedo chequear, con hasKey, si ya hay algo en la tabla con el nombre 'instructora'; luego, invocando set('instructora', 'Ani'), se almacenará el par clave-valor en un bucket específico (determinado al hashear la clave)
 */
 function HashTable() {
-  this.tabla = new Array(35);
-  this.tamano = 0;
+  this.tabla = [];
   this.numBuckets = 35;
-  this.hash= function(llave) {
-    let hash = 0;
-    for (let i = 0; i < llave.length; i++) {
-       hash += llave.charCodeAt(i);
-      
-    }
-    return hash % this.numBuckets;
-  }
-  
- this.set = function (llave, valor) {
-    const indice = this.hash(llave);
-    if (this.tabla[indice]) {
-      for (let i = 0; i < this.tabla[indice].length; i++) {
-        // Encuentra llave-valor en el arreglo
-        if (this.tabla[indice][i][0] === llave) {
-          this.table[indice][i][1] = valor;
-          return this.tabla[indice].indexOf(valor);
-        }
-      }
-      // No encontrado, añade un nuevo llave valor
-      this.tabla[indice].push([llave, valor]);
-    } else {
-      this.tabla[indice] = [];
-      this.tabla[indice].push([llave, valor]);
-    }
-    this.tamano++;
-  }
 
-  this.get = function(llave) {
-    const objetivo = this.hash(llave);
-    if (this.tabla[llave]) {
-      for (let i = 0; i < this.tabla.length; i++) {
-        if (this.tabla[objetivo][i][0] === llave) {
-          return this.tabla[objetivo][i][1];
-        }
-      }
-    }
-    return undefined;
-  }
-
-  this.hasKey = function(llave) {
-    const indice = this.hash(llave);
-    if(this.tabla[indice].indexOf(llave))
-      {
-        return true}
-     return false;
-
-  }
  
+}
+
+HashTable.prototype.hash= function(llave) {
+  let hash = 0;
+  for (let i = 0; i < llave.length; i++) {
+     hash += llave.charCodeAt(i); 
+  }
+  return hash % this.numBuckets;
+}
+
+HashTable.prototype.set = function (llave, valor) {
+  if(typeof llave !== 'string'){
+    throw new TypeError('la llave debe ser un string')
+  }
+  let indice = this.hash(llave);
+  if (!this.tabla[indice]) this.tabla[indice] = {}
+  this.tabla[indice][llave]=valor
+}
+
+HashTable.prototype.get = function(llave) {
+  let indice = this.hash(llave);
+  return this.tabla[indice][llave]
+}
+
+HashTable.prototype.hasKey = function(llave) {
+  let indice = this.hash(llave);
+ if(this.tabla[indice][llave]) return true;
+ return false;
+
 }
 // let hashTable = new HashTable();
 // hashTable.set('foobar', 'fluf cats');
