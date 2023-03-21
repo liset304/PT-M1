@@ -52,21 +52,35 @@ function bubbleSort(array) {
   // el array recibido como parámetro
   // Devolver el array ordenado resultante
   // Tu código:
-  if(array.length>1){
-    let ordenado;
-    do{
-      ordenado = true;
-      for(let i = 0; i < array.length-1; i++){
-        if(array[i]>array[i+1]){
-          let aux = array[i];
-          array[i] = array[i+1];
-          array[i+1]=aux;
-          ordenado = false
-        }
+  // if(array.length>1){
+  //   let ordenado;
+  //   do{
+  //     ordenado = true;
+  //     for(let i = 0; i < array.length-1; i++){
+  //       if(array[i]>array[i+1]){
+  //         let aux = array[i];
+  //         array[i] = array[i+1];
+  //         array[i+1]=aux;
+  //         ordenado = false
+  //       }
+  //     }
+  //   }while (!ordenado);
+  // }
+  // return array;
+
+  let swap = true
+  while(swap){
+    swap = false
+    for(let i = 0; i<array.length-1; i++){
+      if(array[i]>array[i+1]){
+        let aux = array[i];
+        array[i] = array[i+1];
+        array[i+1]=aux;
+        swap=true;
       }
-    }while (!ordenado);
+    }
   }
-  return array;
+  return array
 }
 
 
